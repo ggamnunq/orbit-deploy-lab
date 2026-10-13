@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: orbit-dev
+resources:
+- namespace.yaml
+- ../../base
+images:
+- name: orbit-api
+  newName: nginx
+  newTag: "1.27"
+configMapGenerator:
+- name: orbit-config
+  behavior: merge
+  literals:
+  - APP_ENV=dev
+  - LOG_LEVEL=debug
+patches:
+- target:
+    kind: Ingress
+    name: orbit-api
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: dev.orbit.local
