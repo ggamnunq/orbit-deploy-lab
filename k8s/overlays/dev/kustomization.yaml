@@ -8,6 +8,9 @@ images:
 - name: orbit-api
   newName: ghcr.io/ggamnunq/orbit-api
   newTag: 2d416aa
+replicas:
+- name: orbit-api
+  count: 2
 configMapGenerator:
 - behavior: merge
   literals:
