@@ -6,19 +6,19 @@ resources:
 - ../../base
 images:
 - name: orbit-api
-  newName: nginx
-  newTag: "1.27"
+  newName: ghcr.io/ggamnunq/orbit-api
+  newTag: 2d416aa
 configMapGenerator:
-- name: orbit-config
-  behavior: merge
+- behavior: merge
   literals:
   - APP_ENV=dev
   - LOG_LEVEL=debug
+  name: orbit-config
 patches:
-- target:
-    kind: Ingress
-    name: orbit-api
-  patch: |-
+- patch: |-
     - op: replace
       path: /spec/rules/0/host
       value: dev.orbit.local
+  target:
+    kind: Ingress
+    name: orbit-api
